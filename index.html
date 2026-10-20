@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payasito Chiquillin | Show Infantil y Eventos Especiales</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Poppins & Cinzel/Playfair for gold elegant circus theme -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        serif: ['Cinzel', 'serif'],
+                    },
+                    colors: {
+                        goldTheme: '#E5C158',
+                        goldDark: '#B8860B',
+                        goldBright: '#FDF0A6',
+                        circusRed: '#D32F2F',
+                        bgBlack: '#0B0B0C',
+                        bgCard: '#141416',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gold-border-glow {
+            border: 2px solid #E5C158;
+            box-shadow: 0 0 15px rgba(229, 193, 88, 0.4);
+        }
+        .gold-text-gradient {
+            background: linear-gradient(135deg, #FFF0A6 0%, #E5C158 50%, #996515 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-btn-gradient {
+            background: linear-gradient(135deg, #FDE047 0%, #E5C158 50%, #B8860B 100%);
+        }
+        .gold-btn-gradient:hover {
+            background: linear-gradient(135deg, #FEF08A 0%, #F59E0B 50%, #92400E 100%);
+        }
+        .bg-sparkles {
+            background-color: #0B0B0C;
+            background-image: radial-gradient(#e5c158 0.75px, transparent 0.75px), radial-gradient(#e5c158 0.75px, #0b0b0c 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            opacity: 0.95;
+        }
+        .card-hover:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 30px rgba(229, 193, 88, 0.25);
+        }
+    </style>
+</head>
+<body class="bg-bgBlack text-slate-100 font-sans min-h-screen flex flex-col selection:bg-goldTheme selection:text-bgBlack">
+
+    <header class="sticky top-0 z-50 bg-black/95 backdrop-blur-md border-b border-goldTheme/30 shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('inicio')">
+                    <div class="w-12 h-12 bg-gradient-to-tr from-amber-600 via-goldTheme to-yellow-200 rounded-full flex items-center justify-center shadow-lg border border-goldBright">
+                        <i class="fa-solid fa-face-smile text-black text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-serif font-black tracking-wider gold-text-gradient">Payasito Chiquillin</span>
+                        <span class="block text-xs uppercase tracking-widest text-goldTheme font-semibold">El Mejor Show para tu Evento</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex items-center space-x-8 font-semibold text-sm">
+                    <button onclick="switchTab('inicio')" id="nav-inicio" class="nav-btn transition-colors text-goldTheme border-b-2 border-goldTheme pb-1">Inicio</button>
+                    <button onclick="switchTab('nosotros')" id="nav-nosotros" class="nav-btn transition-colors hover:text-goldTheme text-slate-300 pb-1">Quiénes Somos</button>
+                    <button onclick="switchTab('productos')" id="nav-productos" class="nav-btn transition-colors hover:text-goldTheme text-slate-300 pb-1">Nuestros Servicios</button>
+                    <button onclick="switchTab('contacto')" id="nav-contacto" class="nav-btn transition-colors hover:text-goldTheme text-slate-300 pb-1">Contactar</button>
+                </nav>
+
+                <!-- WhatsApp Booking CTA Button -->
+                <div class="hidden sm:flex items-center">
+                    <a href="https://wa.me/51938273737?text=¡Hola!%20Deseo%20reservar%20mi%20cita%20con%20el%20Payasito%20Chiquillin." target="_blank" 
+                       class="gold-btn-gradient text-black font-extrabold px-6 py-2.5 rounded-full shadow-lg transform hover:scale-105 transition-all flex items-center space-x-2 border border-yellow-200">
+                        <i class="fa-brands fa-whatsapp text-xl text-black"></i>
+                        <span>Reserva Tu Cita</span>
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="text-slate-300 hover:text-goldTheme focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-bgCard border-b border-goldTheme/30 px-4 pt-2 pb-6 space-y-3">
+            <button onclick="switchTab('inicio'); toggleMobileMenu();" class="block w-full text-left py-2 px-3 rounded hover:bg-zinc-800 text-goldTheme font-medium">Inicio</button>
+            <button onclick="switchTab('nosotros'); toggleMobileMenu();" class="block w-full text-left py-2 px-3 rounded hover:bg-zinc-800 font-medium">Quiénes Somos</button>
+            <button onclick="switchTab('productos'); toggleMobileMenu();" class="block w-full text-left py-2 px-3 rounded hover:bg-zinc-800 font-medium">Nuestros Servicios</button>
+            <button onclick="switchTab('contacto'); toggleMobileMenu();" class="block w-full text-left py-2 px-3 rounded hover:bg-zinc-800 font-medium">Contactar</button>
+            <a href="https://wa.me/51938273737?text=¡Hola!%20Deseo%20reservar%20el%20mejor%20show%20para%20mi%20evento." target="_blank" 
+               class="block w-full text-center gold-btn-gradient text-black font-extrabold py-3 rounded-full shadow-lg mt-2">
+                <i class="fa-brands fa-whatsapp mr-2"></i> Reservar WhatsApp (938 273 737)
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+
+        <!-- ==================== TAB: INICIO ==================== -->
+        <section id="tab-inicio" class="tab-content">
+            <!-- Hero Banner Inspired by Flyer Layout -->
+            <div class="relative overflow-hidden bg-sparkles py-12 lg:py-20 border-b border-goldTheme/30">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                        
+                        <!-- Left side details from flyer -->
+                        <div class="lg:col-span-6 space-y-6 text-center lg:text-left">
+                            <span class="inline-flex items-center space-x-2 bg-black/80 border border-goldTheme px-4 py-1.5 rounded-full text-goldTheme text-sm font-semibold tracking-wide shadow-md">
+                                <i class="fa-solid fa-star text-xs text-amber-400"></i>
+                                <span>Espectáculo Garantizado & Diversión Asegurada</span>
+                                <i class="fa-solid fa-star text-xs text-amber-400"></i>
+                            </span>
+
+                            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-serif font-black tracking-tight leading-none text-white">
+                                <span class="gold-text-gradient block">Payasito Chiquillin</span>
+                            </h1>
+
+                            <p class="text-slate-300 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
+                                ¡El Show N° 1 para hacer de tu fiesta un recuerdo inolvidable! Risas, magia, dinamismo y mucha diversión familiar.
+                            </p>
+
+                            <!-- Main Services List matching the flyer -->
+                            <div class="bg-bgCard/95 border border-goldTheme/60 rounded-2xl p-6 shadow-2xl backdrop-blur-md max-w-lg mx-auto lg:mx-0">
+                                <h3 class="text-xl font-serif font-bold text-goldTheme mb-4 border-b border-goldTheme/30 pb-2 flex items-center justify-center lg:justify-start space-x-2">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                    <span>Nuestros Servicios Estelares</span>
+                                </h3>
+                                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-slate-200 text-left font-medium">
+                                    <li class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-star text-goldTheme text-sm"></i>
+                                        <span>Babyshower</span>
+                                    </li>
+                                    <li class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-star text-goldTheme text-sm"></i>
+                                        <span>Fiestas Infantiles</span>
+                                    </li>
+                                    <li class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-star text-goldTheme text-sm"></i>
+                                        <span>Cumpleaños de Adulto</span>
+                                    </li>
+                                    <li class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-star text-goldTheme text-sm"></i>
+                                        <span>Cortes de Pelo y Más</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                                <a href="https://wa.me/51938273737?text=¡Hola!%20Deseo%20reservar%20una%20cita%20con%20el%20Payasito%20Chiquillin.%20Lo%20mejor%20para%20mi%20evento." target="_blank"
+                                   class="gold-btn-gradient text-black font-black text-xl px-8 py-4 rounded-full shadow-2xl transform hover:scale-105 transition-all flex items-center space-x-3">
+                                    <i class="fa-brands fa-whatsapp text-2xl"></i>
+                                    <span>Reserva Tu Cita: 938 273 737</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Right Side Strategic Clown Showcase (Inspired by circular badge layout on flyer) -->
+                        <div class="lg:col-span-6 flex justify-center">
+                            <div class="relative w-full max-w-md flex flex-col items-center">
+                                
+                                <!-- Floating Top Decorative Badge -->
+                                <div class="absolute -top-4 z-20 bg-black/90 border-2 border-goldTheme text-goldTheme px-6 py-2 rounded-full font-serif font-bold text-sm tracking-wider shadow-xl flex items-center space-x-2 animate-bounce">
+                                    <i class="fa-solid fa-crown text-amber-400"></i>
+                                    <span>¡Show Estelar Garantizado!</span>
+                                </div>
+
+                                <!-- Main Circular/Oval Clown Image Container (Matching Flyer Spotting) -->
+                                <div class="relative w-72 h-72 sm:w-96 sm:h-96 rounded-full overflow-hidden gold-border-glow bg-black p-3 shadow-2xl group cursor-pointer" onclick="openLightbox('856665252_122129267619436548_601092838279098731_n.jpg', 'Payasito Chiquillin en Acción')">
+                                    <div class="w-full h-full rounded-full overflow-hidden bg-zinc-900 relative">
+                                        <img src="856665252_122129267619436548_601092838279098731_n.jpg" 
+                                             onerror="this.onerror=null; this.src='https://placehold.co/600x600/0b0b0c/e5c158?text=Payasito+Chiquillin';" 
+                                             alt="Payasito Chiquillin" 
+                                             class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-center pb-6">
+                                            <span class="text-goldTheme font-serif font-extrabold text-sm sm:text-base tracking-wide bg-black/80 px-4 py-1.5 rounded-full border border-goldTheme/60">
+                                                <i class="fa-solid fa-circle-play mr-1"></i> Payasito Chiquillin
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Sub-badges row below the clown photo -->
+                                <div class="grid grid-cols-2 gap-4 mt-6 w-full">
+                                    <div class="bg-bgCard/90 border border-goldTheme/50 p-3 rounded-2xl text-center shadow-lg cursor-pointer hover:border-goldTheme transition-all" onclick="switchTab('productos')">
+                                        <i class="fa-solid fa-wand-magic text-goldTheme text-xl mb-1"></i>
+                                        <span class="block text-xs font-bold text-white">Magia y Risas</span>
+                                        <span class="text-[10px] text-slate-400">Para todas las edades</span>
+                                    </div>
+                                    <div class="bg-bgCard/90 border border-goldTheme/50 p-3 rounded-2xl text-center shadow-lg cursor-pointer hover:border-goldTheme transition-all" onclick="switchTab('contacto')">
+                                        <i class="fa-brands fa-whatsapp text-emerald-400 text-xl mb-1"></i>
+                                        <span class="block text-xs font-bold text-white">Reservas 938 273 737</span>
+                                        <span class="text-[10px] text-emerald-400">Atención Inmediata</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Highlights -->
+            <section class="py-20 bg-bgCard">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-3xl mx-auto mb-16">
+                        <span class="text-goldTheme text-xs uppercase font-bold tracking-widest bg-amber-500/10 px-3 py-1 rounded-md border border-goldTheme/30">
+                            Lo Mejor Para Tu Evento
+                        </span>
+                        <h2 class="text-3xl sm:text-4xl font-serif font-bold gold-text-gradient mt-3">¿Por Qué Elegir al Payasito Chiquillin?</h2>
+                        <p class="text-slate-400 mt-3">Un espectáculo completo de animación, carisma y diversión garantizada adaptado a cada tipo de público.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-black/80 border border-goldTheme/40 rounded-2xl p-8 card-hover transition-all">
+                            <div class="w-14 h-14 bg-amber-500/10 border border-goldTheme/50 rounded-2xl flex items-center justify-center text-goldTheme text-2xl mb-6 shadow-inner">
+                                <i class="fa-solid fa-baby"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3">Babyshower y Fiestas Infantiles</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed">Juegos dinámicos, ternura, animación interactiva y risas para consentir a la futura mamá y a los más pequeñitos.</p>
+                        </div>
+                        <div class="bg-black/80 border border-goldTheme/40 rounded-2xl p-8 card-hover transition-all">
+                            <div class="w-14 h-14 bg-amber-500/10 border border-goldTheme/50 rounded-2xl flex items-center justify-center text-goldTheme text-2xl mb-6 shadow-inner">
+                                <i class="fa-solid fa-masks-theater"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3">Cumpleaños de Adulto</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed">Humor ágil, sano y divertido garantizado para hacer reír a carcajadas a todos los invitados adultos.</p>
+                        </div>
+                        <div class="bg-black/80 border border-goldTheme/40 rounded-2xl p-8 card-hover transition-all">
+                            <div class="w-14 h-14 bg-amber-500/10 border border-goldTheme/50 rounded-2xl flex items-center justify-center text-goldTheme text-2xl mb-6 shadow-inner">
+                                <i class="fa-solid fa-scissors"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3">Cortes de Pelo y Más</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed">Servicios temáticos tradicionales, rutina cómica de corte de pelo, globoflexia y sorpresas inolvidables.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- ==================== TAB: QUIÉNES SOMOS ==================== -->
+        <section id="tab-nosotros" class="tab-content hidden py-20 bg-bgBlack">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-6 space-y-6">
+                        <span class="text-goldTheme font-semibold text-sm uppercase tracking-widest bg-amber-500/10 px-3 py-1 rounded-md border border-goldTheme/30">
+                            Trayectoria y Alegría
+                        </span>
+                        <h2 class="text-3xl sm:text-5xl font-serif font-bold text-white leading-tight">
+                            Conoce al <span class="gold-text-gradient">Payasito Chiquillin</span>
+                        </h2>
+                        <p class="text-slate-300 leading-relaxed text-base sm:text-lg">
+                            El Payasito Chiquillin es un artista destacado del entretenimiento con años de trayectoria llevando risas, ternura y un ambiente festivo inigualable a fiestas y salones en Arequipa y todo el Perú.
+                        </p>
+                        <p class="text-slate-400 leading-relaxed">
+                            Especializado en **Babyshower**, **Fiestas Infantiles**, **Cumpleaños de Adultos** y la tradicional ceremonia de **Cortes de Pelo y Más**, su compromiso es brindar una presentación respetuosa, colorida y de altísima calidad para todos tus invitados.
+                        </p>
+                        <div class="grid grid-cols-2 gap-6 pt-4">
+                            <div class="bg-bgCard border border-goldTheme/40 p-5 rounded-xl">
+                                <span class="block text-3xl font-serif font-black text-goldTheme">100%</span>
+                                <span class="text-sm text-slate-400">Garantizado</span>
+                            </div>
+                            <div class="bg-bgCard border border-goldTheme/40 p-5 rounded-xl">
+                                <span class="block text-3xl font-serif font-black text-goldTheme">Reserva</span>
+                                <span class="text-sm text-slate-400">Directa WhatsApp</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Strategic Image Banner on Quiénes Somos -->
+                    <div class="lg:col-span-6 flex justify-center">
+                        <div class="relative w-full max-w-sm">
+                            <div class="rounded-full overflow-hidden gold-border-glow bg-black p-3 shadow-2xl relative cursor-pointer" onclick="openLightbox('856665252_122129267619436548_601092838279098731_n.jpg', 'El Payasito Chiquillin')">
+                                <div class="w-full h-80 sm:h-96 rounded-full overflow-hidden">
+                                    <img src="856665252_122129267619436548_601092838279098731_n.jpg" 
+                                         onerror="this.onerror=null; this.src='https://placehold.co/600x700/0b0b0c/e5c158?text=Payasito+Chiquillin';" 
+                                         alt="Payasito Chiquillin Presentación" 
+                                         class="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500">
+                                </div>
+                            </div>
+                            <!-- Gold floating label -->
+                            <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-black border border-goldTheme px-6 py-2 rounded-full shadow-2xl text-center">
+                                <span class="text-goldTheme font-serif font-bold text-sm block">Payasito Chiquillin</span>
+                                <span class="text-[10px] text-slate-300">¡Lo mejor para tu evento!</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB: PRODUCTOS / SERVICIOS ==================== -->
+        <section id="tab-productos" class="tab-content hidden py-20 bg-bgCard">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-goldTheme font-semibold text-sm uppercase tracking-widest bg-amber-500/10 px-3 py-1 rounded-md border border-goldTheme/30">
+                        Servicios Exclusivos
+                    </span>
+                    <h2 class="text-3xl sm:text-5xl font-serif font-bold text-white mt-3">Lo Mejor Para Tu Evento</h2>
+                    <p class="text-slate-400 mt-3">Elige la propuesta ideal para tu celebración y haz tu reserva directamente por WhatsApp.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Service 1: Babyshower -->
+                    <div class="bg-black border border-goldTheme/50 rounded-2xl p-6 flex flex-col justify-between card-hover transition-all">
+                        <div>
+                            <div class="w-12 h-12 bg-amber-500/10 border border-goldTheme rounded-xl flex items-center justify-center text-goldTheme text-2xl mb-4">
+                                <i class="fa-solid fa-baby"></i>
+                            </div>
+                            <h3 class="text-xl font-serif font-bold text-white mb-2">Babyshower</h3>
+                            <p class="text-slate-400 text-sm mb-4">Animación tierna, respetuosa e interactiva para la llegada del bebé. Juegos con papás e invitados.</p>
+                        </div>
+                        <a href="https://wa.me/51938273737?text=¡Hola!%20Deseo%20reservar%20el%20servicio%20de%20Babyshower%20con%20el%20Payasito%20Chiquillin." target="_blank"
+                           class="w-full gold-btn-gradient text-black font-extrabold py-3 rounded-xl text-center text-sm shadow flex items-center justify-center space-x-2">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                            <span>Reservar Servicio</span>
+                        </a>
+                    </div>
+
+                    <!-- Service 2: Fiestas Infantiles -->
+                    <div class="bg-black border-2 border-goldTheme rounded-2xl p-6 flex flex-col justify-between card-hover transition-all shadow-xl">
+                        <div>
+                            <div class="w-12 h-12 bg-amber-500/20 border border-goldTheme rounded-xl flex items-center justify-center text-goldTheme text-2xl mb-4">
+                                <i class="fa-solid fa-cake-candles"></i>
+                            </div>
+                            <h3 class="text-xl font-serif font-bold text-goldTheme mb-2">Fiestas Infantiles</h3>
+                            <p class="text-slate-300 text-sm mb-4">Concursos, dinámicas cómicas, animación del pastel, piñata y máxima diversión para los niños.</p>
+                        </div>
+                        <a href="https://wa.me/51938273737?text=¡Hola!%20Deseo%20reservar%20mi%20Fiesta%20Infantil%20con%20el%20Payasito%20Chiquillin." target="_blank"
+                           class="w-full gold-btn-gradient text-black font-extrabold py-3 rounded-xl text-center text-sm shadow flex items-center justify-center space-x-2">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                            <span>Reservar Servicio</span>
+                        </a>
+                    </div>
+
+                    <!-- Service 3: Cumpleaños Adulto -->
+                    <div class="bg-black border border-goldTheme/50 rounded-2xl p-6 flex flex-col justify-between card-hover transition-all">
+                        <div>
+                            <div class="w-12 h-12 bg-amber-500/10 border border-goldTheme rounded-xl flex items-center justify-center text-goldTheme text-2xl mb-4">
+                                <i class="fa-solid fa-champagne-glasses"></i>
+                            </div>
+                            <h3 class="text-xl font-serif font-bold text-white mb-2">Cumpleaños de Adulto</h3>
+                            <p class="text-slate-400 text-sm mb-4">Show cómico elegante, participación de los invitados y momentos divertidos para romper la rutina.</p>
+                        </div>
+                        <a href="https://wa.me/51938273737?text=¡Hola!%20Deseo%20reservar%20el%20servicio%20de%20Cumpleaños%20de%20Adulto." target="_blank"
+                           class="w-full gold-btn-gradient text-black font-extrabold py-3 rounded-xl text-center text-sm shadow flex items-center justify-center space-x-2">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                            <span>Reservar Servicio</span>
+                        </a>
+                    </div>
+
+                    <!-- Service 4: Cortes de Pelo y Más -->
+                    <div class="bg-black border border-goldTheme/50 rounded-2xl p-6 flex flex-col justify-between card-hover transition-all">
+                        <div>
+                            <div class="w-12 h-12 bg-amber-500/10 border border-goldTheme rounded-xl flex items-center justify-center text-goldTheme text-2xl mb-4">
+                                <i class="fa-solid fa-scissors"></i>
+                            </div>
+                            <h3 class="text-xl font-serif font-bold text-white mb-2">Cortes de Pelo y Más</h3>
+                            <p class="text-slate-400 text-sm mb-4">Ritual festivo de corte de cabello tradicional, globoflexia, dinámicas sorpresa y recuerdos inolvidables.</p>
+                        </div>
+                        <a href="https://wa.me/51938273737?text=¡Hola!%20Deseo%20información%20sobre%20Cortes%20de%20Pelo%20y%20Servicios%20Adicionales." target="_blank"
+                           class="w-full gold-btn-gradient text-black font-extrabold py-3 rounded-xl text-center text-sm shadow flex items-center justify-center space-x-2">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                            <span>Reservar Servicio</span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Lightbox Modal for Photo Preview -->
+        <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
+            <div class="relative max-w-3xl w-full bg-bgCard border border-goldTheme rounded-2xl overflow-hidden p-3 shadow-2xl">
+                <button onclick="closeLightbox()" class="absolute top-4 right-4 bg-black/80 text-goldTheme hover:text-white w-10 h-10 rounded-full flex items-center justify-center border border-goldTheme z-10">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+                <img id="lightbox-img" src="" alt="Vista previa" class="w-full h-auto max-h-[80vh] object-contain rounded-xl">
+                <p id="lightbox-caption" class="text-center font-serif font-bold text-goldTheme mt-3 text-lg"></p>
+            </div>
+        </div>
+
+        <!-- ==================== TAB: CONTACTAR ==================== -->
+        <section id="tab-contacto" class="tab-content hidden py-20 bg-bgBlack">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-goldTheme font-semibold text-sm uppercase tracking-widest bg-amber-500/10 px-3 py-1 rounded-md border border-goldTheme/30">
+                        Reserva Tu Cita
+                    </span>
+                    <h2 class="text-3xl sm:text-5xl font-serif font-bold text-white mt-3">Reserva al Payasito Chiquillin</h2>
+                    <p class="text-slate-400 mt-3">Comunícate directamente al número 938 273 737 o envíanos tus datos para coordinar tu fecha.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    <!-- Contact Info -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <div class="bg-bgCard border border-goldTheme/50 rounded-3xl p-8 shadow-xl space-y-6">
+                            <h3 class="text-2xl font-serif font-bold text-white">Contacto Directo</h3>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-amber-500/10 border border-goldTheme rounded-xl flex items-center justify-center text-goldTheme text-xl flex-shrink-0">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div>
+                                    <span class="block text-xs uppercase tracking-wider text-slate-400 font-semibold">Reserva tu cita</span>
+                                    <a href="https://wa.me/51938273737" target="_blank" class="text-2xl font-black text-goldTheme hover:underline">938 273 737</a>
+                                    <span class="block text-xs text-green-400 mt-0.5"><i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp Activo</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-amber-500/10 border border-goldTheme rounded-xl flex items-center justify-center text-goldTheme text-xl flex-shrink-0">
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div>
+                                    <span class="block text-xs uppercase tracking-wider text-slate-400 font-semibold">Garantía</span>
+                                    <span class="text-base font-semibold text-white">Lo Mejor Para Tu Evento</span>
+                                    <span class="block text-xs text-slate-400 mt-0.5">Arequipa y Provincias de Perú</span>
+                                </div>
+                            </div>
+
+                            <div class="pt-4 border-t border-goldTheme/30">
+                                <a href="https://wa.me/51938273737?text=¡Hola!%20Deseo%20reservar%20el%20mejor%20show%20para%20mi%20evento." target="_blank"
+                                   class="w-full gold-btn-gradient text-black font-extrabold py-3.5 rounded-xl shadow-lg text-center flex items-center justify-center space-x-2">
+                                    <i class="fa-brands fa-whatsapp text-2xl"></i>
+                                    <span>Ir Directo a WhatsApp</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="lg:col-span-7">
+                        <div class="bg-bgCard border border-goldTheme/50 rounded-3xl p-8 shadow-xl">
+                            <h3 class="text-2xl font-serif font-bold text-white mb-6">Solicita tu Cotización</h3>
+                            
+                            <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-xs uppercase font-semibold text-slate-300 mb-2">Tu Nombre</label>
+                                        <input type="text" id="form-name" required placeholder="Ej. Juan Pérez" 
+                                               class="w-full bg-black border border-goldTheme/40 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-goldTheme transition-colors">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs uppercase font-semibold text-slate-300 mb-2">Teléfono</label>
+                                        <input type="tel" id="form-phone" required placeholder="Ej. 987654321" 
+                                               class="w-full bg-black border border-goldTheme/40 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-goldTheme transition-colors">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-xs uppercase font-semibold text-slate-300 mb-2">Servicio Requerido</label>
+                                        <select id="form-event" class="w-full bg-black border border-goldTheme/40 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-goldTheme transition-colors">
+                                            <option value="Babyshower">Babyshower</option>
+                                            <option value="Fiestas Infantiles">Fiestas Infantiles</option>
+                                            <option value="Cumpleaños de Adulto">Cumpleaños de Adulto</option>
+                                            <option value="Cortes de Pelo y Más">Cortes de Pelo y Más</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs uppercase font-semibold text-slate-300 mb-2">Fecha del Evento</label>
+                                        <input type="date" id="form-date" required 
+                                               class="w-full bg-black border border-goldTheme/40 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-goldTheme transition-colors">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs uppercase font-semibold text-slate-300 mb-2">Detalles Adicionales</label>
+                                    <textarea id="form-msg" rows="4" placeholder="Lugar del evento, hora aproximada..." 
+                                              class="w-full bg-black border border-goldTheme/40 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-goldTheme transition-colors"></textarea>
+                                </div>
+
+                                <button type="submit" 
+                                        class="w-full gold-btn-gradient text-black font-extrabold py-4 rounded-xl shadow-lg transition-all text-center flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                    <span>Lo Mejor Para Tu Evento - Enviar a WhatsApp</span>
+                                </button>
+                            </form>
+
+                            <!-- Success Message Box -->
+                            <div id="form-success" class="hidden mt-6 p-4 bg-emerald-950 border border-emerald-500 rounded-xl text-emerald-200 text-center">
+                                <i class="fa-solid fa-circle-check text-2xl text-emerald-400 mb-2 block"></i>
+                                <p class="font-bold">¡Solicitud Lista!</p>
+                                <p class="text-sm mt-1">Redirigiendo a tu WhatsApp para concretar tu reserva con el Payasito Chiquillin (938 273 737)...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-black border-t border-goldTheme/30 py-10 text-slate-400 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+            <div class="flex justify-center items-center space-x-3">
+                <span class="text-2xl font-serif font-black gold-text-gradient">Payasito Chiquillin</span>
+            </div>
+            <p class="text-xs text-slate-400 max-w-md mx-auto">
+                Babyshower • Fiestas Infantiles • Cumpleaños de Adulto • Cortes de Pelo y Más.
+            </p>
+            <p class="text-xs text-goldTheme font-semibold">Reserva tu cita: 938 273 737</p>
+            <div class="border-t border-zinc-900 pt-6 text-xs text-slate-600">
+                <p>&copy; 2026 Payasito Chiquillin. Todos los derechos reservados. Lo mejor para tu evento.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching function
+        function switchTab(tabId) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.add('hidden'));
+
+            const targetTab = document.getElementById('tab-' + tabId);
+            if (targetTab) {
+                targetTab.classList.remove('hidden');
+            }
+
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => {
+                btn.classList.remove('text-goldTheme', 'border-b-2', 'border-goldTheme', 'pb-1');
+                btn.classList.add('text-slate-300');
+            });
+
+            const activeBtn = document.getElementById('nav-' + tabId);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-300');
+                activeBtn.classList.add('text-goldTheme', 'border-b-2', 'border-goldTheme', 'pb-1');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('form-name').value;
+            const phone = document.getElementById('form-phone').value;
+            const eventType = document.getElementById('form-event').value;
+            const date = document.getElementById('form-date').value;
+            const msg = document.getElementById('form-msg').value;
+
+            const whatsappText = `¡Hola Payasito Chiquillin! Mi nombre es *${name}* (Tel: ${phone}). Deseo cotizar el servicio *${eventType}* para la fecha *${date}*. Detalles: ${msg}`;
+            const encodedText = encodeURIComponent(whatsappText);
+            const whatsappUrl = `https://wa.me/51938273737?text=${encodedText}`;
+
+            const successBox = document.getElementById('form-success');
+            successBox.classList.remove('hidden');
+
+            setTimeout(() => {
+                window.open(whatsappUrl, '_blank');
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
